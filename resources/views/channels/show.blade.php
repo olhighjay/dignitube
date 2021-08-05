@@ -5,8 +5,6 @@
 
   <div class="card">
     <div class="card-body">
-      {{-- <h5 class="card-title">Title</h5>
-      <p class="card-text">Content</p> --}}
       @if ($channel->editable())
         <form id="update-channel-form" action="{{route('channels.update', $channel->id)}}" method="post" enctype="multipart/form-data">
           @csrf
@@ -16,8 +14,11 @@
 
         <div class="form-group row justify-content-center">
           <div class="channel-avatar">
-            <img src="{{ url($channel->image()) }}" alt="" class="image">
-            {{-- <img src="https://i.pinimg.com/564x/73/16/f5/7316f550de9ca0045e3d8d98a5bb5e44.jpg" alt="" class="image"> --}}
+            @if($channel->image())
+              <img src="{{ url($channel->image()) }}" alt="" class="image">
+            @else
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSF9WuoaNBpIoPF4qXEBWtNOrns4NMYNT_hPA&usqp=CAU" alt="" class="image">
+            @endif
             @if ($channel->editable())
               <div onclick="document.getElementById('image').click()" class="channel-avatar-overlay" >
                 <span class="icon" title="User Profile">
@@ -37,9 +38,9 @@
           </p>
 
           <div class="text-center">
-            <subscribe-button :subscriptions="{{ $channel->subscriptions }}" inline-template>
+            <subscribe-button :channel="{{ $channel }}" :initial-subscriptions="{{ $channel->subscriptions }}" inline-template>
               <button @click="toggleSubscription"  class="btn btn-danger" type="button">
-                Unsubscribe 7k    
+                @{{ owner ? '' : subscribed ? 'Unsubscribe' : 'Subscribe'}} @{{count }} @{{owner ? 'Subscribers': ''}}
               </button>
             </subscribe-button>
           </div>
