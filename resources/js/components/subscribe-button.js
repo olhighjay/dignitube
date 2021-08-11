@@ -54,7 +54,6 @@ Vue.component('subscribe-button', {
         axios.delete(`/channels/${this.channel.id}/subscriptions/${this.subscription.id}`)
         .then(() => {
           this.subscriptions = this.subscriptions.filter(s => s.id != this.subscription.id);
-          console.log(this.subscriptions);
         });
       } else {
         axios.post(`/channels/${this.channel.id}/subscriptions`)
