@@ -4,6 +4,13 @@
  
 
   <div class="card">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between ">
+        
+        {{$channel->name}}
+        <a href="{{ route('channel.upload', $channel->id)}}">Upload Videos</a>
+      </div>
+    </div>
     <div class="card-body">
       @if ($channel->editable())
         <form id="update-channel-form" action="{{route('channels.update', $channel->id)}}" method="post" enctype="multipart/form-data">
@@ -40,7 +47,7 @@
           <div class="text-center">
             <subscribe-button :channel="{{ $channel }}" :initial-subscriptions="{{ $channel->subscriptions }}" inline-template>
               <button @click="toggleSubscription"  class="btn btn-danger" type="button">
-                @{{ owner ? '' : subscribed ? 'Unsubscribe' : 'Subscribe'}} @{{count }} @{{owner ? 'Subscribers': ''}}
+               <span></span> @{{ owner ? '' : subscribed ? 'Unsubscribe' : 'Subscribe'}} @{{count }} @{{owner ? 'Subscribers': ''}}
               </button>
             </subscribe-button>
           </div>

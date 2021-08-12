@@ -1859,6 +1859,8 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js"
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 __webpack_require__(/*! ./components/subscribe-button */ "./resources/js/components/subscribe-button.js");
+
+__webpack_require__(/*! ./components/channel-uploads */ "./resources/js/components/channel-uploads.js");
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -1913,6 +1915,29 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/channel-uploads.js":
+/*!****************************************************!*\
+  !*** ./resources/js/components/channel-uploads.js ***!
+  \****************************************************/
+/***/ (() => {
+
+Vue.component('channel-uploads', {
+  data: function data() {
+    return {
+      selected: false
+    };
+  },
+  methods: {
+    upload: function upload() {
+      this.selected = true;
+      var videos = this.$refs.videos.files;
+      console.log(videos);
+    }
+  }
+});
 
 /***/ }),
 
@@ -2002,7 +2027,6 @@ Vue.component('subscribe-button', {
           _this.subscriptions = _this.subscriptions.filter(function (s) {
             return s.id != _this.subscription.id;
           });
-          console.log(_this.subscriptions);
         });
       } else {
         axios__WEBPACK_IMPORTED_MODULE_0___default().post("/channels/".concat(this.channel.id, "/subscriptions")).then(function (response) {
