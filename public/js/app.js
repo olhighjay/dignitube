@@ -1922,19 +1922,57 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*!****************************************************!*\
   !*** ./resources/js/components/channel-uploads.js ***!
   \****************************************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 Vue.component('channel-uploads', {
+  props: {
+    channel: {
+      type: Object,
+      required: true,
+      "default": function _default() {
+        return {};
+      }
+    }
+  },
   data: function data() {
     return {
-      selected: false
+      selected: false,
+      videos: []
     };
   },
   methods: {
     upload: function upload() {
+      var _this = this;
+
       this.selected = true;
-      var videos = this.$refs.videos.files;
-      console.log(videos);
+      this.videos = Array.from(this.$refs.videos.files);
+      console.log(this.videos);
+      var uploaders = this.videos.map(function (video) {
+        console.log(video);
+        var formData = new FormData();
+        console.log(formData);
+        console.log(video.name);
+        formData.append('video', video);
+        formData.append('title', video.name);
+        console.log('Test well4');
+        console.log(formData);
+        console.log(formData.title);
+        console.log(formData.video);
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post("/channels/".concat(_this.channel.id, "/videos"), formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(function () {
+          console.log('SUCCESS!!');
+        })["catch"](function () {
+          console.log('FAILURE!!');
+        });
+      });
     }
   }
 });
