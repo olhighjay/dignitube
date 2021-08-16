@@ -2,7 +2,7 @@
 @section('content')
   
 
-<div class="container">
+<div class="container-fluid">
   <div class="row justify-content-center" id="bootstrap-overrides" >  
     <channel-uploads :channel="{{ $channel}}" inline-template>
       <div class="col-md-8" >
@@ -12,10 +12,10 @@
           <input type="file" multiple ref="videos" id="video-files" class="d-none" @change="upload">
         </div>
         <div class="card p-3" v-else >
-          <div class="my-4">
+          <div class="my-4" v-for="video in videos">
             <div class="progress mb-3">
-              <div class="progress-bar progress-bar-stripped progress-bar-animated " role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:60%">
-                <span class="sr-only">70% Complete</span>
+              <div class="progress-bar progress-bar-stripped progress-bar-animated " role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" :style="{ width: `${progress[video.name]}%` }">
+                {{-- <span class="sr-only">70% Complete</span> --}}
               </div>
             </div>
 
@@ -29,7 +29,8 @@
 
             <div class="col-md-4">
               <div class="text-center">
-                My Awesome video
+                @{{video.name}} <br>
+                @{{progress[video.name]}}%
               </div>
             </div>
           </div>

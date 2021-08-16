@@ -1942,28 +1942,29 @@ Vue.component('channel-uploads', {
   data: function data() {
     return {
       selected: false,
-      videos: []
+      videos: [],
+      progress: {}
     };
   },
   methods: {
     upload: function upload() {
       var _this = this;
 
+      // When it is selected it doesn't show v-if, it only shows the v-else on the view page
       this.selected = true;
       this.videos = Array.from(this.$refs.videos.files);
-      console.log(this.videos);
       var uploaders = this.videos.map(function (video) {
-        console.log(video);
         var formData = new FormData();
-        console.log(formData);
-        console.log(video.name);
+        _this.progress[video.name] = 0;
         formData.append('video', video);
         formData.append('title', video.name);
-        console.log('Test well4');
-        console.log(formData);
-        console.log(formData.title);
-        console.log(formData.video);
-        axios__WEBPACK_IMPORTED_MODULE_0___default().post("/channels/".concat(_this.channel.id, "/videos"), formData, {
+        return axios__WEBPACK_IMPORTED_MODULE_0___default().post("/channels/".concat(_this.channel.id, "/videos"), formData, {
+          // This function shows the progress of uploading the video
+          onUploadProgress: function onUploadProgress(event) {
+            _this.progress[video.name] = Math.ceil(event.loaded / event.total * 100); // To force VueJs to update the progress as it goes on
+
+            _this.$forceUpdate();
+          },
           headers: {
             'Content-Type': 'multipart/form-data'
           }
