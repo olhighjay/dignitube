@@ -14,24 +14,28 @@
         <div class="card p-3" v-else >
           <div class="my-4" v-for="video in videos">
             <div class="progress mb-3">
-              <div class="progress-bar progress-bar-stripped progress-bar-animated " role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" :style="{ width: `${progress[video.name]}%` }">
-                {{-- <span class="sr-only">70% Complete</span> --}}
+              <div class="progress-bar progress-bar-stripped progress-bar-animated " role="progressbar"  aria-valuemin="0" aria-valuemax="100" :style="{ width: `${video.percentage || progress[video.name]}%` }">
+                @{{ video.percentage ? video.percentage == 100 ? 'Video Processing Completed' : 'Processing' : 'Uploading'}}
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-4">
-                <div class="d-flex justify-content-center align-items-center" style="height: 180px; color:white; font-size:18px; background-color: #222a30">
+                <div v-if="!video.thumbnail" class="d-flex justify-content-center align-items-center" style="height: 180px; color:white; font-size:18px; background-color: #222a30">
                   Loading thumbnail ... 
                 </div>
+                <img v-else :src="video.thumbnail" style="width: 100%" alt="">
               </div>
             </div>
 
             <div class="col-md-4">
-              <div class="text-center">
-                @{{video.name}} <br>
+              <a v-if="video.percentage && video.percentage == 100" target="_blank" :href="`/videos/${video.id}`">
+                @{{ video.title }}
+              </a>
+              <h4 v-else class="text-center">
+                @{{video.title || video.name}} <br>
                 @{{progress[video.name]}}%
-              </div>
+              </h4>
             </div>
           </div>
         </div>

@@ -13,7 +13,9 @@ Vue.component('channel-uploads', {
   data: () => ({
       selected: false,
       videos: [],
-      progress: {}
+      progress: {},
+      uploads: [],
+      intervals : {}
   }),
 
 
@@ -42,13 +44,46 @@ Vue.component('channel-uploads', {
               'Content-Type': 'multipart/form-data'
           }
         }
-        ).then(function(){
-          console.log('SUCCESS!!');
+        ).then(({ data }) => {
+
+          this.uploads = [
+            ...this.uploads,
+            data
+          ]
+
         })
         .catch(function(){
           console.log('FAILURE!!');
         });
-      })  
+      }); 
+      
+      
+      axios.all(uploaders)
+      .then(() => {
+        this.videos = this.uploads
+
+        this.videos.forEach(video => {
+          // At every 3 seconds interval, perform the function in the intrerval
+          this.intervals[video.id] = setInterval(() => {
+            // Send a request to this endpoint and get a data from it
+            axios.get(`/videos/${video.id}`).then(({data}) => {
+              // if the percentage of the data(video) is 100, stop the interval
+              if(data.percentage == 100) {
+                clearInterval(this.intervals[video.id])
+              }
+              // Else, replace the videos with the ones in the database as they are storing up for each of the videos
+              this.videos = this.videos.map((v) => {
+                // If the id of the video is the same thing as the id of the data (video gotten from the request, save the data in the videos variable)
+                if(v.id == data.id) {
+                  return data
+                }
+
+                return v;
+              })
+            })
+          }, 3000)
+        })
+      })
     }
   }
 }) 

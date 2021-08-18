@@ -5,6 +5,7 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\UploadVideoController;
+use App\Http\Controllers\VideoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,9 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::resource('channels', ChannelController::class);
+
+
+Route::get('videos/{video}', [VideoController::class, 'show']);
 
 
 Route::middleware(['auth'])->group(function() {
