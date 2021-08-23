@@ -16,6 +16,7 @@
             <div class="progress mb-3">
               <div class="progress-bar progress-bar-stripped progress-bar-animated " role="progressbar"  aria-valuemin="0" aria-valuemax="100" :style="{ width: `${video.percentage || progress[video.name]}%` }">
                 @{{ video.percentage ? video.percentage == 100 ? 'Video Processing Completed' : 'Processing' : 'Uploading'}}
+                
               </div>
             </div>
 
@@ -34,7 +35,7 @@
               </a>
               <h4 v-else class="text-center">
                 @{{video.title || video.name}} <br>
-                @{{progress[video.name]}}%
+                @{{video.percentage}}%
               </h4>
             </div>
           </div>
