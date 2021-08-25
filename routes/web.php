@@ -6,6 +6,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\UploadVideoController;
 use App\Http\Controllers\VideoController;
+use App\Http\Controllers\VotesController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +37,8 @@ Route::put('videos/{video}/update', [VideoController::class, 'update'])->middlew
 
 
 Route::middleware(['auth'])->group(function() {
+
+    Route::post('votes/{video}/{type}', [VotesController::class, 'vote']);
     
     Route::get('channels/{channel}/videos', [UploadVideoController::class, 'index'])->name('channel.upload');
     Route::post('/channels/{channel}/videos', [UploadVideoController::class, 'store']);
