@@ -6,6 +6,8 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Subscription;
 use App\Models\Channel;
+use App\Models\Video;
+use App\Models\Comment;
 
 
 class DatabaseSeeder extends Seeder
@@ -50,6 +52,22 @@ class DatabaseSeeder extends Seeder
 
         Subscription::factory(10)->create([
             'channel_id'=> $channel2->id
+        ]);
+
+
+        $video = Video::factory()->create([
+            'channel_id'=> $channel1->id
+        ]);
+
+        Comment::factory(50)->create([
+            'video_id'=> $video->id
+        ]);
+
+        $comment = Comment::first();
+
+        Comment::factory(50)->create([
+            'video_id'=> $video->id,
+            'comment_id'=> $comment->id
         ]);
         
     }

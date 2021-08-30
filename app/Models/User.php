@@ -22,11 +22,17 @@ class User extends Authenticatable
             $model->{$model->getKeyName()} = (string) Str::uuid();$model->{$model->getKeyName()} = Str::uuid();
         });
     }
+    
 
 
     public function channel()
     {
         return $this->hasOne(Channel::class);
+    }
+
+
+    public function comments() {
+        return $this->hasMany(Comment::class);
     }
 
 

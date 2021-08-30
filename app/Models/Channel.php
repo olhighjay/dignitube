@@ -56,4 +56,6 @@ class Channel extends Model implements HasMedia
     public function videos() {
         return $this->hasMany(Video::class);
     }
+
+    
 }
