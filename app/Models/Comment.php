@@ -10,6 +10,9 @@ class Comment extends Model
     use HasFactory;
 
 
+    // Load user table related to each comment
+    protected $with = ['user'];
+
     public function video() {
         return $this->belongsTo(Video::class);
     } 

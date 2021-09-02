@@ -7,6 +7,7 @@ use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\UploadVideoController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\VotesController;
+use App\Http\Controllers\CommentController;
 
 
 /*
@@ -31,6 +32,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::resource('channels', ChannelController::class);
 
 
+Route::get('videos/{video}/comments', [CommentController::class, 'index']);
 Route::get('videos/{video}', [VideoController::class, 'show']);
 Route::put('videos/{video}', [VideoController::class, 'updateViews']);
 Route::put('videos/{video}/update', [VideoController::class, 'update'])->middleware(['auth'])->name('videos.update');

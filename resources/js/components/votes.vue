@@ -1,4 +1,4 @@
-(`<template>
+<template>
   <div>
     <span @click="vote('up')" :class="{ 'thumbs-up-active': upvoted }">
       <i  class="far fa-thumbs-up" ></i>
@@ -132,4 +132,3 @@ import axios from 'axios'
   }
 
 </script>
-`)

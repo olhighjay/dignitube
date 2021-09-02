@@ -19,7 +19,7 @@ class VideoController extends Controller
         }
         //else
 
-        dd($video->comments->first()->replies);
+        // dd($video->comments->first()->replies);
         return view('videos/show', compact('video'));
     }
 
