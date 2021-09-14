@@ -33,6 +33,7 @@ Route::resource('channels', ChannelController::class);
 
 
 Route::get('videos/{video}/comments', [CommentController::class, 'index']);
+Route::get('comments/{comment}/replies', [CommentController::class, 'show']);
 Route::get('videos/{video}', [VideoController::class, 'show']);
 Route::put('videos/{video}', [VideoController::class, 'updateViews']);
 Route::put('videos/{video}/update', [VideoController::class, 'update'])->middleware(['auth'])->name('videos.update');
@@ -40,7 +41,7 @@ Route::put('videos/{video}/update', [VideoController::class, 'update'])->middlew
 
 Route::middleware(['auth'])->group(function() {
 
-    Route::post('votes/{video}/{type}', [VotesController::class, 'vote']);
+    Route::post('votes/{entityId}/{type}', [VotesController::class, 'vote']);
     
     Route::get('channels/{channel}/videos', [UploadVideoController::class, 'index'])->name('channel.upload');
     Route::post('/channels/{channel}/videos', [UploadVideoController::class, 'store']);

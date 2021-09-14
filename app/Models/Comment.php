@@ -10,8 +10,11 @@ class Comment extends Model
     use HasFactory;
 
 
-    // Load user table related to each comment
-    protected $with = ['user'];
+    // Load user and votes table related to each comment
+    protected $with = ['user', 'votes'];
+
+    // Adding repliesCount to the appends array makes it show it json format
+    protected $appends = ['repliesCount'];
 
     public function video() {
         return $this->belongsTo(Video::class);
@@ -26,6 +29,16 @@ class Comment extends Model
     public function replies() {
 
         return $this->hasMany(Comment::class, 'comment_id')->whereNotNull('comment_id');
+    }
+
+
+    public function getRepliesCountAttribute() {
+        return $this->replies->count();
+    }
+
+
+    public function votes() {
+        return $this->morphMany(Vote::class, 'voteable');
     }
 
 
