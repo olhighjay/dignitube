@@ -52,7 +52,8 @@ class ChannelController extends Controller
     public function show(Channel $channel)
     {
         // dd($channel->image());
-        return view('channels.show', compact('channel'));
+        $videos = $channel->videos()->paginate(5);
+        return view('channels.show', compact('channel', 'videos'));
     }
 
     /**
